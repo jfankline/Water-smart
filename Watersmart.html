@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaterSmart - AI Water Leak & Rain-Harvest Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #1a6fb0;
+            --secondary: #20c997;
+            --accent: #f77f00;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --danger: #dc3545;
+            --success: #28a745;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1620749330995-06a0b98b201f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+        }
+        
+        .feature-card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section {
+            background-color: var(--primary);
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .impact-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 10px 25px;
+            border-radius: 30px;
+        }
+        
+        .btn-outline-light {
+            border-radius: 30px;
+            padding: 10px 25px;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+            margin: 15px auto 0;
+        }
+        
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        /* Mobile App Styles */
+        .mobile-app-view {
+            display: none;
+            font-family: 'Poppins', sans-serif;
+            max-width: 400px;
+            margin: 0 auto;
+            background: #f5f7f9;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .mobile-header {
+            background: linear-gradient(135deg, var(--primary), #0d4d7a);
+            color: white;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.8rem;
+            width: 25%;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+        
+        .mobile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .mobile-card-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .welcome-section {
+            padding: 20px 15px;
+            background: white;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 8px 0;
+            color: var(--primary);
+        }
+        
+        .water-source {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .water-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e6f2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .page-section {
+            display: none;
+            padding: 16px 15px 80px;
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+        
+        .leak-alert {
+            background: #fff4f4;
+            border-left: 4px solid var(--danger);
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .water-chart {
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 10px;
+        }
+        
+        .chart-bar {
+            width: 30px;
+            background: var(--primary);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+        
+        .chart-bar.abnormal {
+            background: var(--danger);
+        }
+        
+        /* Tab styles */
+        .view-switch {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .view-tab {
+            padding: 10px 20px;
+            background: var(--light);
+            border: 1px solid var(--primary);
+            cursor: pointer;
+        }
+        
+        .view-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .mobile-view {
+            display: none;
+        }
+        
+        .desktop-view {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- View Switch Tabs -->
+    <div class="view-switch">
+        <div class="view-tab active" id="desktop-tab">Website View</div>
+        <div class="view-tab" id="mobile-tab">Mobile App View</div>
+    </div>
+    
+    <!-- Desktop Website View -->
+    <div class="desktop-view" id="desktop-view">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="#">
+                    <i class="fas fa-tint text-primary me-2"></i> WaterSmart
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#how-it-works">How It Works</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#impact">Impact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#testimonials">Testimonials</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <div class="ms-lg-3 mt-3 mt-lg-0">
+                        <a href="#signup" class="btn btn-primary">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h1 class="display-4 fw-bold mb-4">Smart water management for every farmer</h1>
+                        <p class="lead mb-5">Detect leaks, harvest rain, and outlast the drought with our AI-powered water management system</p>
+                        <a href="#how-it-works" class="btn btn-primary btn-lg me-2">Learn More</a>
+                        <a href="#signup" class="btn btn-outline-light btn-lg">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-5 bg-light">
+            <div class="container py-5">
+                <h2 class="text-center section-title">Key Features</h2>
+                <div class="row g-4">
+                    <!-- Feature 1 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card feature-card h-100 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <h4 class="card-title">Farmer Registration</h4>
+                                <p class="card-text">Simple sign-up with phone number for SMS alerts, farm location details, and secure login options.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card feature-card h-100 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon">
+                                    <i class="fas fa-water"></i>
+                                </div>
+                                <h4 class="card-title">Rainwater Tracking</h4>
+                                <p class="card-text">Monitor tanks, ponds, or cisterns with capacity and current fill levels. Integrates with weather APIs.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card feature-card h-100 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <h4 class="card-title">Leak Detection</h4>
+                                <p class="card-text">AI-powered anomaly detection spots abnormal water usage patterns and sends instant alerts.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 4 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card feature-card h-100 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h4 class="card-title">Water Budgeting</h4>
+                                <p class="card-text">Calculate safe daily usage targets during drought periods with "days-of-water-remaining" forecasts.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 5 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card feature-card h-100 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <h4 class="card-title">Offline-First Design</h4>
+                                <p class="card-text">Progressive Web App works without constant internet, syncing data when connection is available.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 6 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card feature-card h-100 shadow-sm">
+                            <div class="card-body text-center p-4">
+                                <div class="feature-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h4 class="card-title">Community Insights</h4>
+                                <p class="card-text">Leaderboards and maps show collective water savings and leaks prevented across communities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="py-5">
+            <div class="container py-5">
+                <h2 class="text-center section-title">How It Works</h2>
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="d-flex mb-4">
+                            <div class="me-4">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">1</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4>Sign Up</h4>
+                                <p>Farmers register with name, phone number, farm location, and water source details.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-4">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">2</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4>Add Water Sources</h4>
+                                <p>Register tanks, ponds, or cisterns with their capacity and current fill levels.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-4">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">3</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4>Log Rainfall & Usage</h4>
+                                <p>Input rainfall measurements or connect to weather APIs. Enter daily water usage data.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="me-4">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <span class="fw-bold">4</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4>Receive AI Insights</h4>
+                                <p>Get alerts about potential leaks and forecasts about your water supply duration.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Farmer using smartphone" class="img-fluid rounded shadow">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Section -->
+        <section id="impact" class="py-5 bg-light">
+            <div class="container py-5">
+                <h2 class="text-center section-title">Our Impact</h2>
+                <div class="row text-center">
+                    <div class="col-md-4 mb-4">
+                        <div class="impact-number">30%</div>
+                        <p>Reduction in water loss from leaks</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="impact-number">60%</div>
+                        <p>Longer water supply during drought periods</p>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="impact-number">85%</div>
+                        <p>Of farmers report improved crop yields</p>
+                    </div>
+                </div>
+                
+                <div class="row mt-5">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h4 class="card-title">For Farmers</h4>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item border-0 ps-0"><i class="fas fa-check-circle text-success me-2"></i> Extended drought-period water supply</li>
+                                    <li class="list-group-item border-0 ps-0"><i class="fas fa-check-circle text-success me-2"></i> Reduced water loss from leaks and theft</li>
+                                    <li class="list-group-item border-0 ps-0"><i class="fas fa-check-circle text-success me-2"></i> Improved farm resilience and food security</li>
+                                    <li class="list-group-item border-0 ps-0"><i class="fas fa-check-circle text-success me-2"></i> Conservation tips and best practices</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body p-4">
+                                <h4 class="card-title">For Communities & Governments</h4>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item border-0 ps-0"><i class="fas fa-check-circle text-success me-2"></i> Aggregated data for water resource planning</li>
+                                    <li class="list-group-item border-0 ps-0"><i class="fas fa-check-circle text-success me-2"></i> Insights into regional water availability</li>
+                                    <li class="list-group-item border-0 ps-0"><i class="fas fa-check-circle text-success me-2"></i> Better targeting of water interventions</li>
+                                    <li class="list-group-item border-0 ps-0"><i class="fas fa-check-circle text-success me-2"></i> Community engagement through leaderboards</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="py-5">
+            <div class="container py-5">
+                <h2 class="text-center section-title">What Farmers Say</h2>
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <p class="fst-italic">"The leak detection alert saved me thousands of liters of water. I was able to fix a broken pipe I didn't even know about."</p>
+                                <div class="d-flex align-items-center mt-3">
+                                    <div class="fw-bold me-2">James K.</div>
+                                    <small class="text-muted">Maize Farmer, Kenya</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <p class="fst-italic">"During the last drought, the water budgeting feature helped my family make our supply last 3 weeks longer than previous years."</p>
+                                <div class="d-flex align-items-center mt-3">
+                                    <div class="fw-bold me-2">Mary W.</div>
+                                    <small class="text-muted">Vegetable Farmer, Tanzania</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <p class="fst-italic">"I love that it works even when I don't have internet. The app syncs when I go to town and get connectivity."</p>
+                                <div class="d-flex align-items-center mt-3">
+                                    <div class="fw-bold me-2">Samuel T.</div>
+                                    <small class="text-muted">Coffee Farmer, Ethiopia</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="signup" class="cta-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="mb-4">Start Managing Your Water Smarter Today</h2>
+                        <p class="lead mb-5">Join thousands of farmers already benefiting from our AI-powered water management system</p>
+                        
+                        <div class="row g-4 justify-content-center">
+                            <div class="col-md-8">
+                                <form class="row g-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control form-control-lg" placeholder="Your Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="tel" class="form-control form-control-lg" placeholder="Phone Number">
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-light btn-lg w-100">Get Started</button>
+                                    </div>
+                                </form>
+                                <p class="small mt-3">By signing up, you agree to our Terms of Service</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <h5>WaterSmart</h5>
+                        <p>Smart water management for every farmer—detect leaks, harvest rain, and outlast the drought.</p>
+                        <div class="d-flex">
+                            <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-4">
+                        <h5>Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><a href="#features" class="text-white text-decoration-none">Features</a></li>
+                            <li class="mb-2"><a href="#how-it-works" class="text-white text-decoration-none">How It Works</a></li>
+                            <li class="mb-2"><a href="#impact" class="text-white text-decoration-none">Impact</a></li>
+                            <li class="mb-2"><a href="#testimonials" class="text-white text-decoration-none">Testimonials</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-4 mb-4">
+                        <h5>Support</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Help Center</a></li>
+                            <li class="mb-2"><a href="#" class="text-white text-decoration-none">FAQ</a></li>
+                            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-4 mb-4">
+                        <h5>Contact</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-envelope me-2"></i> support@watersmart.com</li>
+                            <li class="mb-2"><i class="fas fa-phone me-2"></i> +254 700 123 456</li>
+                            <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Nairobi, Kenya</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="mt-4 mb-4">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <p class="mb-0">&copy; 2023 WaterSmart. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end mb-3">
+                        <a href="#" class="text-white text-decoration-none me-3">Privacy Policy</a>
+                        <a href="#" class="text-white text-decoration-none">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Mobile App View -->
+    <div class="mobile-view" id="mobile-view">
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-tint"></i>
+                    <span>WaterSmart</span>
+                </div>
+                <div>
+                    <i class="fas fa-bell"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div class="page-section active" id="mobile-dashboard">
+            <div class="welcome-section">
+                <div class="welcome-text">Hello, Samuel!</div>
+                <div class="date-text">Tuesday, October 17</div>
+            </div>
+
+            <div class="leak-alert">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <div style="font-weight: 500;">Abnormal usage detected</div>
+                    <div style="font-size: 0.9rem;">Possible leak in Main Tank. Check now!</div>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value">12,500L</div>
+                    <div class="stat-label">Total Storage</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">64%</div>
+                    <div class="stat-label">Average Fill</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">42 days</div>
+                    <div class="stat-label">Water Left</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">3.2mm</div>
+                    <div class="stat-label">Last Rainfall</div>
+                </div>
+            </div>
+
+            <div class="mobile-card">
+                <div class="mobile-card-title">
+                    <span>Water Sources</span>
+                    <i class="fas fa-plus" style="color: var(--primary);"></i>
+                </div>
+                
+                <div class="water-source">
+                    <div class="water-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div class="water-details">
+                        <div class="water-name">Main Tank</div>
+                        <div class="water-capacity">10,000L capacity • 7,200L (72%)</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 72%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="water-source">
+                    <div class="water-icon">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div class="water-details">
+                        <div class="water-name">Storage Pond</div>
+                        <div class="water-capacity">15,000L capacity • 5,300L (35%)</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 35%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mobile-card">
+                <div class="mobile-card-title">Recent Usage</div>
+                <div class="water-chart">
+                    <div class="chart-bar" style="height: 30%;">
+                        <div class="chart-label">Mon</div>
+                    </div>
+                    <div class="chart-bar" style="height: 45%;">
+                        <div class="chart-label">Tue</div>
+                    </div>
+                    <div class="chart-bar" style="height: 38%;">
+                        <div class="chart-label">Wed</div>
+                    </div>
+                    <div class="chart-bar abnormal" style="height: 85%;">
+                        <div class="chart-label">Thu</div>
+                    </div>
+                    <div class="chart-bar" style="height: 42%;">
+                        <div class="chart-label">Fri</div>
+                    </div>
+                    <div class="chart-bar" style="height: 35%;">
+                        <div class="chart-label">Sat</div>
+                    </div>
+                    <div class="chart-bar" style="height: 40%;">
+                        <div class="chart-label">Sun</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Water Tracking Page -->
+        <div class="page-section" id="mobile-tracking">
+            <div class="mobile-card">
+                <div class="mobile-card-title">Record Water Usage</div>
+                
+                <div class="form-group">
+                    <label class="form-label">Select Water Source</label>
+                    <select class="form-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                        <option>Main Tank</option>
+                        <option>Storage Pond</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Current Level (liters)</label>
+                    <input type="number" class="form-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" placeholder="Enter current water level">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; padding: 14px; border-radius: 8px; background: var(--primary); color: white; border: none;">Save Reading</button>
+            </div>
+            
+            <div class="mobile-card">
+                <div class="mobile-card-title">Record Rainfall</div>
+                
+                <div class="form-group">
+                    <label class="form-label">Rainfall Amount (mm)</label>
+                    <input type="number" class="form-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" placeholder="Enter rainfall measurement">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Date</label>
+                    <input type="date" class="form-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; padding: 14px; border-radius: 8px; background: var(--primary); color: white; border: none;">Save Rainfall Data</button>
+            </div>
+        </div>
+
+        <!-- Alerts Page -->
+        <div class="page-section" id="mobile-alerts">
+            <div class="mobile-card">
+                <div class="mobile-card-title">Leak Detection</div>
+                
+                <div class="alert" style="background: #ffe6e6; color: var(--danger); padding: 12px; border-radius: 8px; display: flex; align-items: center; margin-bottom: 16px;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div style="margin-left: 10px;">
+                        <div style="font-weight: 500;">Abnormal usage detected</div>
+                        <div style="font-size: 0.9rem;">October 16, 2023 • Main Tank</div>
+                    </div>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <div style="font-weight: 500;">Usage Pattern</div>
+                    <div class="water-chart">
+                        <div class="chart-bar" style="height: 30%;">
+                            <div class="chart-label">Mon</div>
+                        </div>
+                        <div class="chart-bar" style="height: 45%;">
+                            <div class="chart-label">Tue</div>
+                        </div>
+                        <div class="chart-bar" style="height: 38%;">
+                            <div class="chart-label">Wed</div>
+                        </div>
+                        <div class="chart-bar abnormal" style="height: 85%;">
+                            <div class="chart-label">Thu</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <div style="font-weight: 500;">Recommended Actions</div>
+                    <ul style="margin: 10px 0 10px 20px; color: var(--gray);">
+                        <li>Check for visible leaks in pipes</li>
+                        <li>Inspect tank for cracks or damage</li>
+                        <li>Verify all taps are fully closed</li>
+                        <li>Monitor usage for next 24 hours</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mobile-card">
+                <div class="mobile-card-title">Drought Forecast</div>
+                
+                <div class="alert" style="background: #e6ffed; color: var(--success); padding: 12px; border-radius: 8px; display: flex; align-items: center; margin-bottom: 16px;">
+                    <i class="fas fa-info-circle"></i>
+                    <div style="margin-left: 10px;">
+                        <div style="font-weight: 500;">No drought expected in next 2 weeks</div>
+                        <div style="font-size: 0.9rem;">Based on weather forecasts</div>
+                    </div>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <div style="font-weight: 500;">Water Projection</div>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary);">42 days</div>
+                        <div style="color: var(--gray);">of water remaining at current usage</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Set Drought Duration (days)</label>
+                    <input type="number" class="form-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" value="90">
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; padding: 14px; border-radius: 8px; background: var(--primary); color: white; border: none;">Update Projection</button>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div class="page-section" id="mobile-profile">
+            <div class="mobile-card">
+                <div class="mobile-card-title">Farm Information</div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="width: 80px; height: 80px; border-radius: 50%; background: #e6f2ff; display: inline-flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-user" style="font-size: 2rem; color: var(--primary);"></i>
+                    </div>
+                    <div style="font-weight: 600; font-size: 1.2rem; margin-top: 10px;">Samuel Njoro</div>
+                    <div style="color: var(--gray);">Nakuru, Kenya</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" value="Samuel Njoro">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" value="+254 712 345 678">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Farm Location</label>
+                    <input type="text" class="form-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" value="Nakuru, Kenya">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Farm Size (acres)</label>
+                    <input type="number" class="form-input" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" value="5.5">
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; padding: 14px; border-radius: 8px; background: var(--primary); color: white; border: none;">Save Changes</button>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="#" class="nav-item active" data-page="mobile-dashboard">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" data-page="mobile-tracking">
+                <i class="fas fa-chart-line"></i>
+                <span>Tracking</span>
+            </a>
+            <a href="#" class="nav-item" data-page="mobile-alerts">
+                <i class="fas fa-bell"></i>
+                <span>Alerts</span>
+            </a>
+            <a href="#" class="nav-item" data-page="mobile-profile">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // View switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const desktopTab = document.getElementById('desktop-tab');
+            const mobileTab = document.getElementById('mobile-tab');
+            const desktopView = document.getElementById('desktop-view');
+            const mobileView = document.getElementById('mobile-view');
+            
+            // Switch to desktop view
+            desktopTab.addEventListener('click', function() {
+                desktopTab.classList.add('active');
+                mobileTab.classList.remove('active');
+                desktopView.style.display = 'block';
+                mobileView.style.display = 'none';
+            });
+            
+            // Switch to mobile view
+            mobileTab.addEventListener('click', function() {
+                mobileTab.classList.add('active');
+                desktopTab.classList.remove('active');
+                desktopView.style.display = 'none';
+                mobileView.style.display = 'block';
+            });
+            
+            // Mobile app navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            const pageSections = document.querySelectorAll('.page-section');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all items
+                    navItems.forEach(navItem => {
+                        navItem.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Hide all page sections
+                    pageSections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Show the corresponding page section
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                });
+            });
+            
+            // Initialize PWA functionality
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+                });
+            }
+            
+            // Create manifest file for PWA
+            const manifest = {
+                "name": "WaterSmart - Farm Water Manager",
+                "short_name": "WaterSmart",
+                "description": "AI-powered water management for smallholder farmers",
+                "start_url": "/",
+                "display": "standalone",
+                "background_color": "#1a6fb0",
+                "theme_color": "#1a6fb0",
+                "icons": [
+                    {
+                        "src": "icon-192.png",
+                        "sizes": "192x192",
+                        "type": "image/png"
+                    },
+                    {
+                        "src": "icon-512.png",
+                        "sizes": "512x512",
+                        "type": "image/png"
+                    }
+                ]
+            };
+            
+            // Save to localStorage for offline use
+            localStorage.setItem('waterData', JSON.stringify({
+                user: {
+                    name: "Samuel Njoro",
+                    phone: "+254712345678",
+                    location: "Nakuru, Kenya",
+                    farmSize: 5.5
+                },
+                waterSources: [
+                    { name: "Main Tank", capacity: 10000, currentLevel: 7200 },
+                    { name: "Storage Pond", capacity: 15000, currentLevel: 5300 }
+                ],
+                usageHistory: [
+                    { date: "2023-10-10", usage: 450 },
+                    { date: "2023-10-11", usage: 520 },
+                    { date: "2023-10-12", usage: 480 },
+                    { date: "2023-10-13", usage: 1200 },
+                    { date: "2023-10-14", usage: 500 },
+                    { date: "2023-10-15", usage: 460 },
+                    { date: "2023-10-16", usage: 490 }
+                ]
+            }));
+        });
+    </script>
+</body>
+</html>
